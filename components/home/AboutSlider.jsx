@@ -3,63 +3,39 @@ import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import Image from "next/image";
 
-const videos = [
-  {
-    id: 1,
-    title: "Từ ám ảnh HÀM HÔ hóa HOTGIRL XINH ĐẸP chỉ sau 1 ĐÊM",
-    description:
-      "Bác sĩ Tú Dung BẬT MÍ 10 bí mật ĐỘNG TRỜI về Phẫu thuật hàm hô biến XẤU thành ĐẸP chỉ sau 1 GIẤC NGỦ",
-    image: "/home/sddefault.jpg",
-  },
-  {
-    id: 2,
-    title: "Doanh nhân Việt Kiều chi TIỀN TỶ làm răng ???",
-    description:
-      "CHẤN ĐỘNG doanh nhân VIỆT KIỀU chi khủng 500 TRIỆU Trồng răng Implant lão hóa ngược, ĐẸP KHÔNG TUỔI",
-    image: "/home/sddefault.jpg",
-  },
-  {
-    id: 3,
-    title: "Ngăn KHẨU MIỆNG, 10 MỐI LƯU Ý...",
-    description:
-      "Bác sĩ Tú Dung NGẠO NGÃ trào lưu tạo MÔI TRÁI TIM, chẳng khác MỎ CHIM của Spa chui",
-    image: "/home/sddefault.jpg",
-  },
-  {
-    id: 4,
-    title: "Ngăn KHẨU MIỆNG, 10 MỐI LƯU Ý...",
-    description:
-      "Bác sĩ Tú Dung NGẠO NGÃ trào lưu tạo MÔI TRÁI TIM, chẳng khác MỎ CHIM của Spa chui",
-    image: "/home/sddefault.jpg",
-  },
-];
-
-const VideoSlider = ({ slide }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // Slide trung tâm mặc định
+const AboutSlider = ({ slide }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="bg-[#f5fafd] py-8 px-4 md:px-0">
+    <div className="py-8 relative">
       <Swiper
-        modules={[Navigation]}
-        navigation
+        modules={[Navigation, Autoplay]}
+        navigation={{
+          nextEl: ".swiper-button-next-custom",
+          prevEl: ".swiper-button-prev-custom",
+        }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
         loop={true}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        className="mySwiper"
+        className="about-slider"
         breakpoints={{
           0: {
             slidesPerView: 1,
-            spaceBetween: 0,
+            spaceBetween: 10,
             centeredSlides: false,
           },
           640: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 15,
             centeredSlides: true,
           },
-          768: {
+          1024: {
             slidesPerView: 3,
             spaceBetween: 20,
             centeredSlides: true,
@@ -68,37 +44,84 @@ const VideoSlider = ({ slide }) => {
       >
         {slide.map((item, index) => {
           const imageUrl = item.image.data.attributes.url;
+          const isActive = activeIndex === index;
+
           return (
-            <SwiperSlide key={item.id} className="flex justify-center w-full">
+            <SwiperSlide key={item.id}>
               <div
                 className={`relative transition-all duration-500 ease-in-out ${
-                  activeIndex === index
-                    ? "z-20 scale-105 opacity-100"
-                    : "z-10 scale-90 opacity-60"
-                } w-full h-[200px] md:h-[250px]`}
+                  isActive
+                    ? "scale-100 opacity-100"
+                    : "scale-90 opacity-70"
+                } w-full h-[250px] md:h-[300px] rounded-2xl overflow-hidden group`}
               >
+                {/* Image */}
                 <Image
                   src={
                     process.env.NEXT_PUBLIC_URL_BE + imageUrl ||
                     "/path/defalut.jpg"
                   }
                   alt={item.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg "
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
 
-                <div className="absolute bottom-0 left-0 w-full p-2 bg-[#304ba6] text-white text-center">
-                  <p className="font-semibold line-clamp-1">{item.title}</p>
-                  <p className="text-xs line-clamp-2">{item.description}</p>
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-beauty-dark/90 via-beauty-dark/50 to-transparent"></div>
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h4 className="font-bold text-base md:text-lg mb-1 line-clamp-2">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs md:text-sm opacity-90 line-clamp-2">
+                    {item.description}
+                  </p>
                 </div>
+
+                {/* Active Indicator */}
+                {isActive && (
+                  <div className="absolute top-4 right-4 w-3 h-3 bg-beauty-primary rounded-full animate-pulse shadow-glow"></div>
+                )}
               </div>
             </SwiperSlide>
           );
         })}
       </Swiper>
+
+      {/* Custom Navigation Buttons */}
+      <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-beauty flex items-center justify-center hover:bg-beauty-primary hover:text-white transition-all duration-300 -ml-6 hidden md:flex">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+      <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-beauty flex items-center justify-center hover:bg-beauty-primary hover:text-white transition-all duration-300 -mr-6 hidden md:flex">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
     </div>
   );
 };
 
-export default VideoSlider;
+export default AboutSlider;

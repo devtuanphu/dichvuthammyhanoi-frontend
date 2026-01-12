@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -9,122 +9,124 @@ import ModalBaoGia from "./ModalBaoGia";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const [scrolled, setScrolled] = useState(false);
 
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const menuItems = [
-    { title: "Dịch Vụ", link: "/dich-vu" },
+    { title: "Trang Chủ", link: "/" },
     { title: "Về Chúng Tôi", link: "/ve-chung-toi" },
-    { title: "Khách Hàng", link: "/khach-hang" },
+    { title: "Dịch Vụ", link: "/dich-vu" },
     { title: "Tin Tức", link: "/tin-tuc" },
     { title: "Liên Hệ", link: "/lien-he" },
   ];
 
   return (
     <>
-      <div className="sticky top-0 z-50">
-        {" "}
+      <div className="fixed top-0 left-0 right-0 z-[100] transition-all duration-700">
         <Marquee />
-        <div className="py-4 shadow-lg   bg-white">
-          <div className="container mx-auto flex justify-between items-center px-4 md:px-0">
+        <header
+          className={`transition-all duration-700 ${
+            scrolled
+              ? "py-3 bg-white/80 backdrop-blur-2xl border-b border-black/5 shadow-premium"
+              : "py-6 bg-transparent"
+          }`}
+        >
+          <div className="container-premium flex justify-between items-center">
             {/* Logo */}
-            <Link href="/">
+            <Link href="/" className="relative z-[110] group">
               <Image
-                src="/logo.png"
-                alt="Logo"
-                width={300}
-                height={300}
-                className="w-[200px] md:w-[300px]"
+                src="/logo-hanoi.png"
+                alt="Premium Clinic Logo"
+                width={240}
+                height={80}
+                className={`transition-all duration-700 object-contain ${
+                  scrolled ? "w-[160px] md:w-[200px]" : "w-[180px] md:w-[240px]"
+                } ${!scrolled && "brightness-0"}`}
+                priority
               />
             </Link>
 
-            {/* Nút Hamburger cho Mobile */}
-            <div className="block lg:hidden">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-10">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.title}
+                  href={item.link}
+                  className={`text-[11px] font-bold uppercase tracking-[0.25em] transition-all duration-500 relative group truncate ${
+                    scrolled ? "text-beauty-dark" : "text-black"
+                  }`}
+                >
+                  {item.title}
+                  <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-beauty-primary transition-all duration-500 group-hover:w-full"></span>
+                </Link>
+              ))}
+              <div className={`h-4 w-[1px] mx-2 transition-colors duration-700 ${scrolled ? "bg-black/10" : "bg-black/20"}`}></div>
+              <button 
+                onClick={() => setIsModalVisible(true)}
+                className="btn-premium-primary !px-8 !py-3 !text-[10px]"
+              >
+                Đặt Lịch
+              </button>
+            </nav>
+
+            {/* Mobile Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden relative z-[110] p-2"
+              aria-label="Toggle Menu"
+            >
               {isOpen ? (
-                <CloseOutlined
-                  className="text-3xl text-[#304ba6]"
-                  onClick={() => setIsOpen(!isOpen)}
-                />
+                <CloseOutlined className="text-2xl text-beauty-dark" />
               ) : (
-                <MenuOutlined
-                  className="text-3xl text-[#304ba6]"
-                  onClick={() => setIsOpen(!isOpen)}
-                />
+                <MenuOutlined className={`text-2xl transition-colors duration-500 ${scrolled ? "text-beauty-dark" : "text-black"}`} />
               )}
-            </div>
-
-            {/* Menu và Nút Đặt Lịch cho màn hình lớn */}
-            <div className="hidden lg:flex space-x-8 items-center">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.link}
-                  className="text-[#304ba6] font-medium text-lg"
-                >
-                  {item.title}
-                </Link>
-              ))}
-              {/* Nút Đặt Lịch Ngay */}
-              <button
-                onClick={showModal}
-                className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-              >
-                Đặt Lịch Ngay
-              </button>
-            </div>
+            </button>
           </div>
+        </header>
 
-          {/* Sidebar cho mobile */}
-          <div
-            className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform ${
-              isOpen ? "translate-x-0" : "-translate-x-full"
-            } transition-transform duration-300 ease-in-out`}
-          >
-            <div className="flex flex-col mt-16 space-y-6 pl-6">
-              <Link href="/">
-                <Image
-                  src="/logo.png"
-                  alt="Logo"
-                  width={300}
-                  height={300}
-                  className="w-[200px] md:w-[300px]"
-                />
+        {/* Cinematic Mobile Navigation */}
+        <div 
+          className={`fixed inset-0 bg-white z-[105] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          }`}
+        >
+          <div className="flex flex-col h-full items-center justify-center p-12 space-y-10">
+            {menuItems.map((item, idx) => (
+              <Link
+                key={item.title}
+                href={item.link}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+                className={`text-4xl md:text-6xl font-display text-beauty-dark transition-all duration-1000 ${
+                  isOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                } hover:text-beauty-primary hover:italic`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.title}
               </Link>
-              {menuItems.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.link}
-                  className="text-[#304ba6] hover:text-blue-500 font-medium text-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.title}
-                </Link>
-              ))}
-              {/* Nút Đặt Lịch Ngay trong Sidebar */}
-              <button
-                onClick={showModal}
-                className=" w-[80%] bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-              >
-                Đặt Lịch Ngay
-              </button>
-            </div>
+            ))}
+            <div className={`h-[1px] w-20 bg-beauty-primary transition-all duration-1000 ${isOpen ? "w-40 opacity-100" : "w-0 opacity-0"}`}></div>
+            <button
+              onClick={() => {
+                setIsModalVisible(true);
+                setIsOpen(false);
+              }}
+              className="btn-premium-gold !px-12 !py-5"
+            >
+              Yêu cầu tư vấn
+            </button>
           </div>
-
-          {/* Overlay khi sidebar mở */}
-          {isOpen && (
-            <div
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
-              onClick={() => setIsOpen(false)}
-            ></div>
-          )}
         </div>
       </div>
+
       {isModalVisible && (
-        <ModalBaoGia visible={isModalVisible} onClose={handleModalClose} />
+        <ModalBaoGia visible={isModalVisible} onClose={() => setIsModalVisible(false)} />
       )}
     </>
   );

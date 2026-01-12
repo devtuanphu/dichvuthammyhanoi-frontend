@@ -29,65 +29,65 @@ async function fetchWithToken(endpoint) {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   const dataHome = await fetchWithToken(
     `${ENDPOINT.GET_TIN_TUC}?filters[slug][$eq]=${slug}&${searchParams}`
   );
 
-  const seo = dataHome?.data[0].attributes?.seo;
+  const seo = dataHome?.data?.[0]?.attributes?.seo || {};
 
   const baseUrl = process.env.NEXT_PUBLIC_URL_BE || "";
 
   return {
     metadataBase: new URL(baseUrl),
-    title: seo.title || "Trang chủ - Công ty TNHH Kỹ thuật NTS",
+    title: seo?.title || "Dịch vụ thẩm mỹ",
     description:
-      seo.description ||
-      "Công ty TNHH Kỹ thuật NTS cung cấp các giải pháp kỹ thuật công trình hàng đầu.",
+      seo?.description ||
+      "Dịch vụ thẩm mỹ chuyên nghiệp, uy tín, chất lượng cao.",
     keywords:
-      seo.keywords ||
-      "kỹ thuật, công trình, tư vấn cơ điện, xử lý nước, tái sử dụng nước",
-    authors: [{ name: seo.author || "Công ty TNHH Kỹ thuật NTS" }],
+      seo?.keywords ||
+      "thẩm mỹ, làm đẹp, chăm sóc da, spa",
+    authors: [{ name: seo?.author || "Dịch vụ thẩm mỹ" }],
     openGraph: {
       title:
-        seo.ogTitle || seo.title || "Trang chủ - Công ty TNHH Kỹ thuật NTS",
+        seo?.ogTitle || seo?.title || "Dịch vụ thẩm mỹ",
       description:
-        seo.ogDescription ||
-        seo.description ||
-        "Công ty TNHH Kỹ thuật NTS cung cấp các giải pháp kỹ thuật công trình hàng đầu.",
-      url: `${baseUrl}/home`,
+        seo?.ogDescription ||
+        seo?.description ||
+        "Dịch vụ thẩm mỹ chuyên nghiệp, uy tín, chất lượng cao.",
+      url: `${baseUrl}/${slug}`,
       images: [
         {
-          url: seo.thumbnail?.data?.attributes?.url
+          url: seo?.thumbnail?.data?.attributes?.url
             ? `${baseUrl}${seo.thumbnail.data.attributes.url}`
-            : "/path/to/default-image.jpg",
+            : "/logo.png",
           width: 800,
           height: 600,
-          alt: "Image description",
+          alt: seo?.title || "Image",
         },
       ],
     },
     twitter: {
       title:
-        seo.twitterTitle ||
-        seo.title ||
-        "Trang chủ - Công ty TNHH Kỹ thuật NTS",
+        seo?.twitterTitle ||
+        seo?.title ||
+        "Dịch vụ thẩm mỹ",
       description:
-        seo.twitterDescription ||
-        seo.description ||
-        "Công ty TNHH Kỹ thuật NTS cung cấp các giải pháp kỹ thuật công trình hàng đầu.",
+        seo?.twitterDescription ||
+        seo?.description ||
+        "Dịch vụ thẩm mỹ chuyên nghiệp, uy tín, chất lượng cao.",
       images: [
-        seo.twitterImage
+        seo?.twitterImage
           ? `${baseUrl}${seo.twitterImage}`
-          : "/path/to/default-image.jpg",
+          : "/logo.png",
       ],
       card: "summary_large_image",
     },
   };
 }
 const page = async ({ params }) => {
-  const { slug } = params;
+  const { slug } = await params;
   function convertToDateDDMMYYYY(isoDateString) {
     const date = new Date(isoDateString);
     const day = String(date.getDate()).padStart(2, "0");

@@ -1,3 +1,143 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #1A1A1A;
+    --font-heading: "Playfair Display", serif;
+    --font-sans: "Inter", sans-serif;
+  }
+
+  body {
+    @apply bg-white text-beauty-dark font-sans antialiased selection:bg-beauty-primary/30 selection:text-beauty-dark;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight transition-colors duration-500;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Unified Container */
+  .container-premium {
+    @apply container mx-auto px-6 md:px-12 lg:px-20 max-w-7xl;
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-28 md:py-40;
+  }
+
+  /* Ultra-Premium Buttons */
+  .btn-premium {
+    @apply relative overflow-hidden px-12 py-5 font-bold text-[10px] uppercase tracking-[0.3em] 
+           transition-all duration-700 ease-out border border-transparent flex items-center justify-center gap-3;
+  }
+
+  .btn-premium-primary {
+    @apply btn-premium bg-beauty-dark text-white hover:bg-beauty-charcoal shadow-premium hover:shadow-premium-hover 
+           active:scale-95;
+  }
+
+  .btn-premium-gold {
+    @apply btn-premium bg-beauty-primary text-white hover:bg-beauty-accent shadow-gold 
+           hover:shadow-premium-hover active:scale-95;
+  }
+
+  .btn-premium-outline {
+    @apply btn-premium border-beauty-dark/10 text-beauty-dark hover:border-beauty-dark 
+           hover:bg-beauty-dark hover:text-white;
+  }
+
+  /* Cinematic Cards */
+  .card-premium {
+    @apply bg-white border border-beauty-secondary/30 shadow-premium 
+           hover:shadow-premium-hover transition-all duration-700 ease-out;
+  }
+
+  .card-premium-glass {
+    @apply bg-white/40 backdrop-blur-2xl border border-white/20 shadow-premium;
+  }
+
+  /* Typography Utilities */
+  .heading-xl {
+    @apply text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-display leading-[1.15] tracking-tighter;
+  }
+
+  .heading-lg {
+    @apply text-3xl md:text-5xl lg:text-7xl font-display leading-[1.2] tracking-tight;
+  }
+
+  .text-premium {
+    @apply text-base md:text-lg lg:text-xl text-beauty-charcoal/70 font-light leading-relaxed;
+  }
+
+  /* Decorative Elements */
+  .line-accent {
+    @apply h-[1px] w-12 md:w-16 bg-beauty-primary inline-block shrink-0;
+  }
+
+  .mask-image {
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  }
+}
+
+/* Custom Overrides & Smoothness */
+::selection {
+  background: #D4A373;
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-beauty-secondary/20;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-beauty-primary/30 rounded-full hover:bg-beauty-primary transition-all duration-500 shadow-inner;
+}
+
+/* Ant Design Global Overrides (Ultra-Minimalist) */
+.ant-modal-content {
+  @apply !rounded-none !p-0 overflow-hidden shadow-premium-hover !bg-white/95 !backdrop-blur-xl !border !border-white/10 !important;
+}
+
+.ant-btn {
+  @apply !rounded-none !h-auto !px-12 !py-5 !font-bold !text-[10px] !uppercase !tracking-[0.3em] !transition-all !duration-700 !border-transparent !important;
+}
+
+.ant-input, .ant-select-selector {
+  @apply !rounded-none !border-none !bg-beauty-secondary/30 !py-5 !px-8 !text-beauty-dark !placeholder-beauty-charcoal/30 !transition-all !duration-700 !font-light !text-lg !important;
+}
+
+.ant-input:focus, .ant-input-hover {
+  @apply !bg-beauty-secondary/50 !shadow-none !important;
+}
+
+/* Swiper Bullet Overrides (Couture Style) */
+.swiper-pagination-bullet {
+  @apply !bg-beauty-dark !opacity-10 !w-12 !h-[1px] !rounded-none !transition-all !duration-1000 !ease-out !m-0 !important;
+}
+
+.swiper-pagination-bullet-active {
+  @apply !opacity-100 !w-24 !bg-beauty-primary;
+}
+
+/* Image Animations */
+.reveal-on-scroll {
+  @apply opacity-0 translate-y-20 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)];
+}
+
+.reveal-on-scroll.visible {
+  @apply opacity-100 translate-y-0;
+}

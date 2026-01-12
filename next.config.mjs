@@ -25,6 +25,24 @@ const nextConfig = {
       },
     ],
   },
+  // Suppress React 19 warnings from third-party libraries
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+    return config;
+  },
+  // Suppress console warnings in production
+  ...(process.env.NODE_ENV === 'production' && {
+    compiler: {
+      removeConsole: {
+        exclude: ['error'],
+      },
+    },
+  }),
 };
 
 export default nextConfig;
