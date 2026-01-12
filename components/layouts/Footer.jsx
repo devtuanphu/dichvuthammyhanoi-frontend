@@ -56,7 +56,7 @@ const Footer = () => {
               />
               <div className="space-y-6">
                  <p className="text-xl font-display italic text-beauty-primary/80">
-                   "Tái định nghĩa chuẩn mực thẩm mỹ chuyên nghiệp từ năm 2008."
+                   &ldquo;Tái định nghĩa chuẩn mực thẩm mỹ chuyên nghiệp từ năm 2008.&rdquo;
                  </p>
                  <div className="flex gap-4">
                    {[FaFacebookF, FaInstagram, FaYoutube].map((Icon, idx) => (

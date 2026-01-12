@@ -23,7 +23,7 @@ const About = ({ about, slide }) => {
 
             <div className="space-y-8">
               <p className="text-2xl md:text-3xl font-display italic text-beauty-charcoal/80 leading-relaxed">
-                "{about.mainDescribe || "Vẻ đẹp là sự biểu hiện độc nhất của bản thân, được tinh chỉnh bởi nghệ thuật và khoa học."}"
+                &ldquo;{about.mainDescribe || "Vẻ đẹp là sự biểu hiện độc nhất của bản thân, được tinh chỉnh bởi nghệ thuật và khoa học."}&rdquo;
               </p>
               
               <div className="h-[1px] w-full bg-black/5"></div>

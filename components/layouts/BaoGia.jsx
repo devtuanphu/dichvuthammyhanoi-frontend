@@ -29,7 +29,7 @@ const BaoGia = () => {
 
             <div className="max-w-3xl mx-auto space-y-10">
               <p className="text-xl md:text-2xl font-display italic text-beauty-charcoal/60 leading-relaxed">
-                "Dù bạn đang tìm kiếm sự thay đổi tinh tế hay lột xác ngoạn mục, các chuyên gia của chúng tôi luôn sẵn sàng đồng hành cùng bạn với sự tận tâm tuyệt đối."
+                &ldquo;Dù bạn đang tìm kiếm sự thay đổi tinh tế hay lột xác ngoạn mục, các chuyên gia của chúng tôi luôn sẵn sàng đồng hành cùng bạn với sự tận tâm tuyệt đối.&rdquo;
               </p>
               
               <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-8">
