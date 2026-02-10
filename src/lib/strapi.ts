@@ -113,6 +113,9 @@ export interface SiteSettings {
 async function fetchAPI<T>(path: string, options: RequestInit = {}): Promise<T> {
   const url = `${STRAPI_URL}/api${path}`;
   
+  console.log(`[Strapi] Fetching: ${url}`);
+  console.log(`[Strapi] Token: ${STRAPI_API_TOKEN ? 'YES (' + STRAPI_API_TOKEN.substring(0, 10) + '...)' : 'NO'}`);
+  
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
@@ -122,21 +125,31 @@ async function fetchAPI<T>(path: string, options: RequestInit = {}): Promise<T> 
     headers['Authorization'] = `Bearer ${STRAPI_API_TOKEN}`;
   }
   
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      ...headers,
-      ...options.headers,
-    },
-    next: { revalidate: 60 },
-  });
+  try {
+    const res = await fetch(url, {
+      ...options,
+      headers: {
+        ...headers,
+        ...options.headers,
+      },
+      next: { revalidate: 60 },
+    });
 
+    console.log(`[Strapi] Response: ${res.status} ${res.statusText}`);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch ${path}`);
+    if (!res.ok) {
+      const errorBody = await res.text();
+      console.error(`[Strapi] Error body: ${errorBody}`);
+      throw new Error(`Failed to fetch ${path}: ${res.status}`);
+    }
+
+    const data = await res.json();
+    console.log(`[Strapi] Data keys:`, Object.keys(data));
+    return data;
+  } catch (error) {
+    console.error(`[Strapi] Fetch error for ${path}:`, error);
+    throw error;
   }
-
-  return res.json();
 }
 
 export function getStrapiImageUrl(image?: StrapiImage): string {

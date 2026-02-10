@@ -41,15 +41,20 @@ export default async function Footer() {
     getContact(),
   ]);
 
+  console.log('[Footer] settings:', JSON.stringify(settings, null, 2));
+  console.log('[Footer] contact:', JSON.stringify(contact, null, 2));
+  console.log('[Footer] services count:', services.length);
+
   // Use fetched data or fallback
   const displayServices = services.length > 0
     ? services.slice(0, 5).map(s => ({ title: s.title, slug: s.slug }))
     : fallbackServices;
 
+  // Prioritize site-setting data over contact data
   const displayContact = {
-    address: contact?.address || fallbackContact.address,
-    phone: contact?.phone || fallbackContact.phone,
-    email: contact?.email || fallbackContact.email,
+    address: settings?.address || contact?.address || fallbackContact.address,
+    phone: settings?.phone || contact?.phone || fallbackContact.phone,
+    email: settings?.email || contact?.email || fallbackContact.email,
   };
 
   const displaySettings = {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getServiceBySlug, getServices, getStrapiImageUrl } from '@/lib/strapi';
+import { getServiceBySlug, getServices, getSiteSettings, getStrapiImageUrl } from '@/lib/strapi';
 import JsonLd from '@/components/JsonLd';
 
 interface Props {
@@ -78,8 +78,13 @@ const fallbackServices: Record<string, { title: string; description: string; pri
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
   
-  // Fetch service from Strapi
-  let service = await getServiceBySlug(slug);
+  // Fetch service and site settings from Strapi
+  const [fetchedService, siteSettings] = await Promise.all([
+    getServiceBySlug(slug),
+    getSiteSettings(),
+  ]);
+  
+  let service = fetchedService;
   
   // Fallback to mock data if not found
   if (!service) {
@@ -94,6 +99,9 @@ export default async function ServiceDetailPage({ params }: Props) {
       ...fallback,
     };
   }
+
+  const phone = siteSettings?.phone || '0123 456 789';
+  const phoneClean = phone.replace(/\s/g, '');
 
   return (
     <>
@@ -162,10 +170,10 @@ export default async function ServiceDetailPage({ params }: Props) {
                   Đặt lịch tư vấn kín đáo
                 </Link>
                 <a
-                  href="tel:0123456789"
+                  href={`tel:${phoneClean}`}
                   className="px-8 py-4 border-2 border-pink-500 text-pink-600 font-semibold rounded-full hover:bg-pink-50 transition-all text-center"
                 >
-                  Gọi: 0123 456 789
+                  Gọi: {phone}
                 </a>
               </div>
             </div>

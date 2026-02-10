@@ -16,8 +16,8 @@ export default function JsonLd({ type, data }: JsonLdProps) {
     "email": "info@dichvuthammyhanoi.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "123 Đường ABC",
-      "addressLocality": "Quận Hoàn Kiếm",
+      "streetAddress": "Số 10 Trần Điền, Định Công",
+      "addressLocality": "Thanh Xuân",
       "addressRegion": "Hà Nội",
       "postalCode": "100000",
       "addressCountry": "VN"

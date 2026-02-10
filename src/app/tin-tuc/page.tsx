@@ -1,19 +1,22 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { getArticles, getStrapiImageUrl, Article } from '@/lib/strapi';
+import { getArticles, getSiteSettings, getStrapiImageUrl, Article } from '@/lib/strapi';
+import { SITE_URL } from '@/lib/constants';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'Tin tức & Kiến thức sức khỏe phụ nữ | Thẩm Mỹ Hà Nội';
+  const settings = await getSiteSettings();
+  const siteName = settings?.siteName || 'Thẩm Mỹ Hà Nội';
+  const title = `Tin tức & Kiến thức sức khỏe phụ nữ | ${siteName}`;
   const description = 'Cập nhật tin tức, kiến thức về chăm sóc sức khỏe phụ nữ và thẩm mỹ vùng kín từ các bác sĩ chuyên khoa. Tư vấn miễn phí, bảo mật tuyệt đối.';
   
   return {
     title,
     description,
-    keywords: ['tin tức thẩm mỹ', 'kiến thức sức khỏe phụ nữ', 'thẩm mỹ vùng kín', 'bác sĩ tư vấn'],
+    keywords: ['tin tức thẩm mỹ', 'kiến thức sức khỏe phụ nữ', 'thẩm mỹ vùng kín', 'bác sĩ tư vấn', siteName.toLowerCase()],
     openGraph: {
       title,
       description,
-      url: 'https://dichvuthammyhanoi.com/tin-tuc',
+      url: `${SITE_URL}/tin-tuc`,
       type: 'website',
     },
     twitter: {
@@ -22,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: 'https://dichvuthammyhanoi.com/tin-tuc',
+      canonical: `${SITE_URL}/tin-tuc`,
     },
   };
 }

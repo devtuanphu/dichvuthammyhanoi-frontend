@@ -1,9 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getServices, getHomepage, getStrapiImageUrl, Service } from '@/lib/strapi';
+import { getServices, getHomepage, getSiteSettings, getStrapiImageUrl, Service } from '@/lib/strapi';
 
 export async function generateMetadata(): Promise<Metadata> {
   const homepage = await getHomepage();
+  
+  console.log('[SEO Home] homepage data:', JSON.stringify(homepage, null, 2));
+  console.log('[SEO Home] seo:', JSON.stringify(homepage?.seo, null, 2));
   
   return {
     title: homepage?.seo?.metaTitle || 'Thẩm Mỹ Hà Nội - Chuyên gia thẩm mỹ vùng kín',
@@ -90,14 +93,17 @@ const whyUs = [
 ];
 
 export default async function HomePage() {
-  const [servicesData, homepageData] = await Promise.all([
+  const [servicesData, homepageData, siteSettings] = await Promise.all([
     getServices(),
     getHomepage(),
+    getSiteSettings(),
   ]);
 
   const services = servicesData.length > 0 ? servicesData.slice(0, 4) : fallbackServices;
   const heroTitle = homepageData?.heroTitle || 'Tự tin tỏa sáng, hạnh phúc viên mãn';
   const heroSubtitle = homepageData?.heroSubtitle || 'Thẩm Mỹ Hà Nội - Địa chỉ thẩm mỹ vùng kín uy tín với đội ngũ bác sĩ nữ chuyên khoa, công nghệ hiện đại và cam kết bảo mật tuyệt đối.';
+  const phone = siteSettings?.phone || '0123 456 789';
+  const phoneClean = phone.replace(/\s/g, '');
 
   return (
     <>
@@ -134,10 +140,10 @@ export default async function HomePage() {
                   </svg>
                 </Link>
                 <a
-                  href="tel:0123456789"
+                  href={`tel:${phoneClean}`}
                   className="inline-flex items-center justify-center px-8 py-4 bg-white text-pink-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-pink-100"
                 >
-                  Hotline: 0123 456 789
+                  Hotline: {phone}
                 </a>
               </div>
               
@@ -417,10 +423,10 @@ export default async function HomePage() {
               Đặt lịch tư vấn kín đáo
             </Link>
             <a
-              href="tel:0123456789"
+              href={`tel:${phoneClean}`}
               className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300"
             >
-              Hotline: 0123 456 789
+              Hotline: {phone}
             </a>
           </div>
         </div>

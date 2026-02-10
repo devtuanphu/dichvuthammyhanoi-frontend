@@ -51,9 +51,10 @@ export default async function ContactPage() {
     getSiteSettings(),
   ]);
 
-  const phone = contactData?.phone || siteSettings?.phone || '0123 456 789';
-  const email = contactData?.email || siteSettings?.email || 'info@dichvuthammyhanoi.com';
-  const address = contactData?.address || siteSettings?.address || '123 Đường ABC, Quận Hoàn Kiếm, Hà Nội';
+  // Prioritize site-setting data over contact data
+  const phone = siteSettings?.phone || contactData?.phone || '0123 456 789';
+  const email = siteSettings?.email || contactData?.email || 'info@dichvuthammyhanoi.com';
+  const address = siteSettings?.address || contactData?.address || '123 Đường ABC, Quận Hoàn Kiếm, Hà Nội';
   const workingHours = contactData?.workingHours || 'Thứ 2 - Chủ nhật: 8:00 - 20:00';
 
   return (

@@ -1,19 +1,22 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { getServices, getStrapiImageUrl, Service } from '@/lib/strapi';
+import { getServices, getSiteSettings, getStrapiImageUrl, Service } from '@/lib/strapi';
+import { SITE_URL } from '@/lib/constants';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'Dịch vụ thẩm mỹ vùng kín | Thẩm Mỹ Hà Nội';
-  const description = 'Dịch vụ thẩm mỹ vùng kín chuyên nghiệp tại Hà Nội: Trẻ hóa Laser, Thu hẹp HIFU, Làm hồng. 100% bác sĩ nữ chuyên khoa, công nghệ hiện đại, bảo mật tuyệt đối.';
+  const settings = await getSiteSettings();
+  const siteName = settings?.siteName || 'Thẩm Mỹ Hà Nội';
+  const title = `Dịch vụ thẩm mỹ vùng kín | ${siteName}`;
+  const description = `Dịch vụ thẩm mỹ vùng kín chuyên nghiệp tại Hà Nội: Trẻ hóa Laser, Thu hẹp HIFU, Làm hồng. 100% bác sĩ nữ chuyên khoa, công nghệ hiện đại, bảo mật tuyệt đối.`;
   
   return {
     title,
     description,
-    keywords: ['dịch vụ thẩm mỹ vùng kín', 'trẻ hóa laser', 'thu hẹp hifu', 'làm hồng vùng kín', 'bác sĩ nữ', 'thẩm mỹ hà nội'],
+    keywords: ['dịch vụ thẩm mỹ vùng kín', 'trẻ hóa laser', 'thu hẹp hifu', 'làm hồng vùng kín', 'bác sĩ nữ', siteName.toLowerCase()],
     openGraph: {
       title,
       description,
-      url: 'https://dichvuthammyhanoi.com/dich-vu',
+      url: `${SITE_URL}/dich-vu`,
       type: 'website',
     },
     twitter: {
@@ -22,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: 'https://dichvuthammyhanoi.com/dich-vu',
+      canonical: `${SITE_URL}/dich-vu`,
     },
   };
 }
@@ -107,12 +110,19 @@ const process = [
 ];
 
 export default async function ServicesPage() {
-  // Fetch services from Strapi, fallback to mock data
-  let services: Service[] = await getServices();
+  // Fetch services and site settings from Strapi
+  const [fetchedServices, siteSettings] = await Promise.all([
+    getServices(),
+    getSiteSettings(),
+  ]);
   
+  let services: Service[] = fetchedServices;
   if (services.length === 0) {
     services = fallbackServices;
   }
+
+  const phone = siteSettings?.phone || '0123 456 789';
+  const phoneClean = phone.replace(/\s/g, '');
 
   return (
     <>
@@ -144,10 +154,10 @@ export default async function ServicesPage() {
               Đặt lịch tư vấn kín đáo
             </Link>
             <a
-              href="tel:0123456789"
+              href={`tel:${phoneClean}`}
               className="px-8 py-4 bg-white text-pink-600 font-semibold rounded-full shadow-lg hover:shadow-xl transition-all"
             >
-              Hotline: 0123 456 789
+              Hotline: {phone}
             </a>
           </div>
         </div>
@@ -374,10 +384,10 @@ export default async function ServicesPage() {
               Đặt lịch tư vấn kín đáo
             </Link>
             <a
-              href="tel:0123456789"
+              href={`tel:${phoneClean}`}
               className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-all"
             >
-              Hotline: 0123 456 789
+              Hotline: {phone}
             </a>
           </div>
         </div>
