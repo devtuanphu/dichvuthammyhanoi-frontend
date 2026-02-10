@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    url: "https://thammyhanoi.vn",
+    url: "https://dichvuthammyhanoi.com",
     siteName: "Thẩm Mỹ Hà Nội",
     title: "Thẩm Mỹ Hà Nội - Chuyên gia thẩm mỹ vùng kín",
     description: "Dịch vụ thẩm mỹ vùng kín chuyên nghiệp. 100% bác sĩ nữ, công nghệ hiện đại, bảo mật tuyệt đối.",
@@ -51,10 +51,10 @@ export const metadata: Metadata = {
     description: "Dịch vụ thẩm mỹ vùng kín chuyên nghiệp. 100% bác sĩ nữ, công nghệ hiện đại, bảo mật tuyệt đối.",
   },
   verification: {
-    google: "your-google-verification-code",
+    google: "google5b2d7fbe0bf6adab",
   },
   alternates: {
-    canonical: "https://thammyhanoi.vn",
+    canonical: "https://dichvuthammyhanoi.com",
   },
 };
 

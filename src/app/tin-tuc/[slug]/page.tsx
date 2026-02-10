@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: 'article',
-      url: `https://thammyhanoi.vn/tin-tuc/${slug}`,
+      url: `https://dichvuthammyhanoi.com/tin-tuc/${slug}`,
       publishedTime: article.publishedAt,
       images: article.image ? [getStrapiImageUrl(article.image)] : [],
     },
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: `https://thammyhanoi.vn/tin-tuc/${slug}`,
+      canonical: `https://dichvuthammyhanoi.com/tin-tuc/${slug}`,
     },
   };
 }
@@ -122,7 +122,7 @@ export default async function ArticleDetailPage({ params }: Props) {
           image: article.image ? getStrapiImageUrl(article.image) : undefined,
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `https://thammyhanoi.vn/tin-tuc/${slug}`,
+            "@id": `https://dichvuthammyhanoi.com/tin-tuc/${slug}`,
           },
         }} 
       />
@@ -199,7 +199,7 @@ export default async function ArticleDetailPage({ params }: Props) {
               <p className="text-gray-500">Chia sẻ bài viết:</p>
               <div className="flex gap-3">
                 <a 
-                  href={`https://www.facebook.com/sharer/sharer.php?u=https://thammyhanoi.vn/tin-tuc/${slug}`}
+                  href={`https://www.facebook.com/sharer/sharer.php?u=https://dichvuthammyhanoi.com/tin-tuc/${slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
@@ -209,7 +209,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                   </svg>
                 </a>
                 <a 
-                  href={`https://twitter.com/intent/tweet?url=https://thammyhanoi.vn/tin-tuc/${slug}&text=${encodeURIComponent(article.title)}`}
+                  href={`https://twitter.com/intent/tweet?url=https://dichvuthammyhanoi.com/tin-tuc/${slug}&text=${encodeURIComponent(article.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"

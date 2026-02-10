@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: 'article',
-      url: `https://thammyhanoi.vn/dich-vu/${slug}`,
+      url: `https://dichvuthammyhanoi.com/dich-vu/${slug}`,
       images: service.image ? [getStrapiImageUrl(service.image)] : [],
     },
     twitter: {
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: `https://thammyhanoi.vn/dich-vu/${slug}`,
+      canonical: `https://dichvuthammyhanoi.com/dich-vu/${slug}`,
     },
   };
 }

@@ -12,7 +12,16 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: contact?.seo?.metaTitle || 'Liên hệ tư vấn kín đáo | Thẩm Mỹ Hà Nội',
       description: contact?.seo?.metaDescription || 'Liên hệ với Thẩm Mỹ Hà Nội để được tư vấn miễn phí và kín đáo.',
+      url: 'https://dichvuthammyhanoi.com/lien-he',
       images: contact?.seo?.metaImage ? [getStrapiImageUrl(contact.seo.metaImage)] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: contact?.seo?.metaTitle || 'Liên hệ tư vấn kín đáo | Thẩm Mỹ Hà Nội',
+      description: contact?.seo?.metaDescription || 'Liên hệ với Thẩm Mỹ Hà Nội để được tư vấn miễn phí và kín đáo.',
+    },
+    alternates: {
+      canonical: 'https://dichvuthammyhanoi.com/lien-he',
     },
   };
 }
@@ -43,7 +52,7 @@ export default async function ContactPage() {
   ]);
 
   const phone = contactData?.phone || siteSettings?.phone || '0123 456 789';
-  const email = contactData?.email || siteSettings?.email || 'info@thammyhanoi.vn';
+  const email = contactData?.email || siteSettings?.email || 'info@dichvuthammyhanoi.com';
   const address = contactData?.address || siteSettings?.address || '123 Đường ABC, Quận Hoàn Kiếm, Hà Nội';
   const workingHours = contactData?.workingHours || 'Thứ 2 - Chủ nhật: 8:00 - 20:00';
 

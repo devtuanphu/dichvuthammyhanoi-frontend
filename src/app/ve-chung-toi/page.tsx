@@ -12,7 +12,16 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: about?.seo?.metaTitle || 'Về chúng tôi | Thẩm Mỹ Hà Nội',
       description: about?.seo?.metaDescription || 'Thẩm Mỹ Hà Nội - Chuyên gia thẩm mỹ vùng kín hàng đầu.',
+      url: 'https://dichvuthammyhanoi.com/ve-chung-toi',
       images: about?.seo?.metaImage ? [getStrapiImageUrl(about.seo.metaImage)] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: about?.seo?.metaTitle || 'Về chúng tôi | Thẩm Mỹ Hà Nội',
+      description: about?.seo?.metaDescription || 'Thẩm Mỹ Hà Nội - Chuyên gia thẩm mỹ vùng kín hàng đầu.',
+    },
+    alternates: {
+      canonical: 'https://dichvuthammyhanoi.com/ve-chung-toi',
     },
   };
 }

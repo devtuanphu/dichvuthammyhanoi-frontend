@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getServices, getArticles } from '@/lib/strapi';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://thammyhanoi.vn';
+  const baseUrl = 'https://dichvuthammyhanoi.com';
   
   // Static pages
   const staticPages = [

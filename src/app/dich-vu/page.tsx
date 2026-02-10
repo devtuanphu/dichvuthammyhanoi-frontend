@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: 'https://thammyhanoi.vn/dich-vu',
+      url: 'https://dichvuthammyhanoi.com/dich-vu',
       type: 'website',
     },
     twitter: {
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: 'https://thammyhanoi.vn/dich-vu',
+      canonical: 'https://dichvuthammyhanoi.com/dich-vu',
     },
   };
 }

@@ -12,7 +12,16 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: homepage?.seo?.metaTitle || 'Thẩm Mỹ Hà Nội',
       description: homepage?.seo?.metaDescription || 'Dịch vụ thẩm mỹ vùng kín chuyên nghiệp',
+      url: 'https://dichvuthammyhanoi.com',
       images: homepage?.seo?.metaImage ? [getStrapiImageUrl(homepage.seo.metaImage)] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homepage?.seo?.metaTitle || 'Thẩm Mỹ Hà Nội - Chuyên gia thẩm mỹ vùng kín',
+      description: homepage?.seo?.metaDescription || 'Dịch vụ thẩm mỹ vùng kín chuyên nghiệp',
+    },
+    alternates: {
+      canonical: 'https://dichvuthammyhanoi.com',
     },
   };
 }

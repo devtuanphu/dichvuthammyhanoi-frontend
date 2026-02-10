@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: 'https://thammyhanoi.vn/tin-tuc',
+      url: 'https://dichvuthammyhanoi.com/tin-tuc',
       type: 'website',
     },
     twitter: {
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
     },
     alternates: {
-      canonical: 'https://thammyhanoi.vn/tin-tuc',
+      canonical: 'https://dichvuthammyhanoi.com/tin-tuc',
     },
   };
 }

@@ -11,9 +11,9 @@ export default function JsonLd({ type, data }: JsonLdProps) {
     "@type": "MedicalBusiness",
     "name": "Thẩm Mỹ Hà Nội",
     "description": "Dịch vụ thẩm mỹ vùng kín chuyên nghiệp tại Hà Nội. Đội ngũ 100% bác sĩ nữ chuyên khoa, công nghệ hiện đại, bảo mật tuyệt đối.",
-    "url": "https://thammyhanoi.vn",
+    "url": "https://dichvuthammyhanoi.com",
     "telephone": "+84123456789",
-    "email": "info@thammyhanoi.vn",
+    "email": "info@dichvuthammyhanoi.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "123 Đường ABC",
@@ -87,7 +87,7 @@ export default function JsonLd({ type, data }: JsonLdProps) {
         "publisher": {
           "@type": "Organization",
           "name": "Thẩm Mỹ Hà Nội",
-          "url": "https://thammyhanoi.vn"
+          "url": "https://dichvuthammyhanoi.com"
         },
         ...data
       };
